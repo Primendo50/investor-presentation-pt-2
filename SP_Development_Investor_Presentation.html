@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S&P Development Group — Investor Presentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue:        #2C7EF4;
+    --orange:      #F15422;
+    --dark-blue:   #403DC6;
+    --dark-grey:   #212537;
+    --white:       #FFFFFF;
+    --black:       #000000;
+    --grey-mid:    #3A3E54;
+    --grey-light:  #8A90A8;
+    --off-white:   #F4F5F8;
+    --blue-glow:   rgba(44,126,244,0.18);
+    --orange-glow: rgba(241,84,34,0.15);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Montserrat', 'Helvetica Neue', Helvetica, sans-serif;
+    background: var(--dark-grey);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 56px;
+    background: rgba(33,37,55,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(44,126,244,0.2);
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .nav-logo-mark {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--blue), var(--dark-blue));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900; color: var(--white);
+    letter-spacing: -1px; clip-path: polygon(0 0,100% 0,100% 75%,50% 100%,0 75%);
+  }
+  .nav-name {
+    font-size: 13px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--white);
+  }
+  .nav-pills { display: flex; gap: 6px; }
+  .nav-pill {
+    height: 6px; width: 20px; border-radius: 3px;
+    background: var(--grey-mid); border: none; cursor: pointer;
+    transition: all .3s;
+  }
+  .nav-pill.active { background: var(--blue); width: 32px; }
+  .nav-slide-label {
+    font-size: 11px; font-weight: 500; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--grey-light);
+  }
+
+  /* ── SLIDE BASE ── */
+  .slide {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 110px 56px 72px;
+    position: relative; overflow: hidden;
+  }
+
+  /* ── SHARED TYPOGRAPHIC SYSTEM ── */
+  .eyebrow {
+    font-size: 10px; font-weight: 700; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--orange);
+    margin-bottom: 20px;
+  }
+  .eyebrow-blue { color: var(--blue); }
+
+  .display {
+    font-size: clamp(44px, 6.5vw, 88px);
+    font-weight: 900; line-height: 1.0; letter-spacing: -2px;
+    margin-bottom: 28px;
+  }
+  .display em { font-style: normal; color: var(--blue); }
+  .display strong { font-style: normal; color: var(--orange); }
+
+  .lead {
+    font-size: 17px; font-weight: 300; line-height: 1.8;
+    color: var(--grey-light); max-width: 640px;
+  }
+
+  .section-title {
+    font-size: clamp(32px, 4vw, 56px);
+    font-weight: 800; line-height: 1.1; letter-spacing: -1px;
+    margin-bottom: 40px;
+  }
+  .section-title em { font-style: normal; color: var(--blue); }
+  .section-title strong { font-style: normal; color: var(--orange); }
+
+  .slide-num {
+    position: absolute; bottom: 28px; right: 56px;
+    font-size: 10px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--grey-mid);
+  }
+  .slide-num span { color: var(--blue); }
+
+  /* ── GEOMETRIC BG DECORATIONS ── */
+  .geo {
+    position: absolute; pointer-events: none;
+  }
+
+  /* ── SLIDE 1: HERO ── */
+  #s1 {
+    background: var(--dark-grey);
+    align-items: flex-start;
+    justify-content: center;
+  }
+  #s1 .geo-circle {
+    right: -120px; top: 50%; transform: translateY(-50%);
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(44,126,244,0.22) 0%, transparent 70%);
+  }
+  #s1 .geo-rect {
+    right: 80px; top: 50%; transform: translateY(-50%);
+    width: 420px; height: 520px;
+    border: 1px solid rgba(44,126,244,0.15);
+    background: linear-gradient(135deg, rgba(64,61,198,0.12), rgba(44,126,244,0.06));
+  }
+  #s1 .geo-accent {
+    right: 80px; top: 50%; transform: translateY(-50%);
+    width: 4px; height: 520px;
+    background: linear-gradient(180deg, var(--orange), var(--blue));
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 700px; }
+
+  .hero-kpis {
+    display: flex; gap: 0; margin-top: 56px;
+    border: 1px solid rgba(44,126,244,0.2);
+    width: fit-content;
+  }
+  .kpi {
+    padding: 24px 36px; text-align: center;
+    border-right: 1px solid rgba(44,126,244,0.2);
+  }
+  .kpi:last-child { border-right: none; }
+  .kpi-val {
+    font-size: 36px; font-weight: 900; color: var(--blue);
+    line-height: 1; display: block; letter-spacing: -1px;
+  }
+  .kpi-val.orange { color: var(--orange); }
+  .kpi-lbl {
+    font-size: 9px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--grey-light);
+    display: block; margin-top: 6px;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(241,84,34,0.12); border: 1px solid rgba(241,84,34,0.3);
+    padding: 8px 16px; margin-bottom: 28px;
+    font-size: 11px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--orange);
+  }
+  .hero-badge::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--orange); animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.4); }
+  }
+
+  /* ── SLIDE 2: PROBLEM ── */
+  #s2 { background: var(--black); }
+  #s2 .geo-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(44,126,244,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(44,126,244,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .problem-cards {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 1px;
+    background: rgba(44,126,244,0.15); margin-top: 48px;
+    position: relative; z-index: 2;
+  }
+  .p-card {
+    background: var(--black); padding: 40px 36px;
+    border-top: 3px solid transparent;
+    transition: border-color .3s, background .3s;
+  }
+  .p-card:hover { background: #0A0A0F; border-top-color: var(--orange); }
+  .p-card-num {
+    font-size: 64px; font-weight: 900; line-height: 1;
+    color: rgba(44,126,244,0.15); margin-bottom: 16px;
+    font-variant-numeric: tabular-nums;
+  }
+  .p-card-title {
+    font-size: 16px; font-weight: 700; color: var(--white);
+    margin-bottom: 12px; letter-spacing: 0.5px;
+  }
+  .p-card-body {
+    font-size: 14px; font-weight: 300; color: var(--grey-light);
+    line-height: 1.7;
+  }
+
+  /* ── SLIDE 3: FOUR PILLARS ── */
+  #s3 { background: var(--dark-grey); }
+  #s3::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, rgba(64,61,198,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .pillars-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+    background: rgba(255,255,255,0.06); position: relative; z-index: 2;
+    margin-top: 40px;
+  }
+  .pillar {
+    background: var(--dark-grey); padding: 40px;
+    border-left: 3px solid transparent;
+    transition: border-color .3s, background .3s;
+    position: relative; overflow: hidden;
+  }
+  .pillar:hover {
+    border-left-color: var(--blue);
+    background: rgba(44,126,244,0.05);
+  }
+  .pillar-icon {
+    width: 48px; height: 48px; margin-bottom: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    background: rgba(44,126,244,0.1);
+    border: 1px solid rgba(44,126,244,0.2);
+  }
+  .pillar-title {
+    font-size: 18px; font-weight: 700; color: var(--white);
+    margin-bottom: 12px;
+  }
+  .pillar-body {
+    font-size: 14px; font-weight: 300; color: var(--grey-light);
+    line-height: 1.75;
+  }
+  .pillar-tag {
+    display: inline-block; margin-top: 16px;
+    font-size: 9px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--orange);
+    background: rgba(241,84,34,0.1); border: 1px solid rgba(241,84,34,0.25);
+    padding: 4px 10px;
+  }
+
+  /* ── SLIDE 4: TRANSPARENCY ── */
+  #s4 { background: var(--black); }
+
+  .transparency-layout {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 56px; align-items: start;
+    position: relative; z-index: 2; margin-top: 8px;
+  }
+  .t-left p {
+    font-size: 15px; font-weight: 300; color: var(--grey-light);
+    line-height: 1.8; margin-bottom: 24px;
+  }
+  .t-callout {
+    background: rgba(44,126,244,0.08);
+    border-left: 3px solid var(--blue);
+    padding: 20px 24px;
+    font-size: 14px; font-weight: 500; color: var(--white);
+    line-height: 1.7;
+  }
+  .t-callout span { color: var(--blue); font-weight: 700; }
+
+  .data-table { display: flex; flex-direction: column; gap: 2px; }
+  .dt-row {
+    display: flex; align-items: center; gap: 16px;
+    background: #0D0E15; padding: 16px 20px;
+    border: 1px solid rgba(255,255,255,0.04);
+    transition: all .25s;
+  }
+  .dt-row:hover {
+    background: rgba(44,126,244,0.08);
+    border-color: rgba(44,126,244,0.3);
+  }
+  .dt-icon {
+    width: 34px; height: 34px; flex-shrink: 0;
+    background: rgba(44,126,244,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+  }
+  .dt-label {
+    flex: 1; font-size: 13px; font-weight: 600;
+    letter-spacing: 0.5px; color: var(--white);
+  }
+  .dt-badge {
+    font-size: 9px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; padding: 4px 10px;
+    background: rgba(44,126,244,0.15); color: var(--blue);
+    white-space: nowrap;
+  }
+  .dt-badge.orange {
+    background: rgba(241,84,34,0.12); color: var(--orange);
+  }
+
+  /* ── SLIDE 5: FINANCIAL ── */
+  #s5 { background: var(--dark-grey); }
+  #s5::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blue), var(--orange), transparent);
+  }
+
+  .fin-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 24px; margin-top: 40px; position: relative; z-index: 2;
+  }
+  .fin-phase {
+    background: rgba(0,0,0,0.35);
+    border: 1px solid rgba(44,126,244,0.2);
+    padding: 36px; position: relative; overflow: hidden;
+  }
+  .fin-phase::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  }
+  .fin-phase.p1::before { background: var(--blue); }
+  .fin-phase.p2::before { background: var(--orange); }
+
+  .fin-phase-label {
+    font-size: 9px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--grey-light);
+    margin-bottom: 6px;
+  }
+  .fin-phase-title {
+    font-size: 24px; font-weight: 800; color: var(--white);
+    margin-bottom: 28px; letter-spacing: -0.5px;
+  }
+
+  .fin-line {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 13px;
+  }
+  .fin-line:last-of-type { border-bottom: none; }
+  .fin-line .fl { color: var(--grey-light); font-weight: 400; }
+  .fin-line .fv {
+    font-weight: 700; color: var(--blue); font-size: 13px;
+    letter-spacing: 0.3px;
+  }
+  .fin-line .fv.orange { color: var(--orange); }
+  .fin-line .fv.white { color: var(--white); }
+
+  .fin-note {
+    margin-top: 20px; padding: 14px 18px;
+    background: rgba(44,126,244,0.07);
+    border-left: 2px solid var(--blue);
+    font-size: 12px; font-weight: 400; color: rgba(255,255,255,0.6);
+    line-height: 1.6;
+  }
+  .fin-note.orange-note {
+    background: rgba(241,84,34,0.07); border-left-color: var(--orange);
+  }
+
+  /* ── SLIDE 6: SPEED ── */
+  #s6 { background: var(--black); }
+
+  .speed-layout {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 56px; position: relative; z-index: 2;
+  }
+
+  .tl { display: flex; flex-direction: column; gap: 0; position: relative; }
+  .tl::before {
+    content: ''; position: absolute;
+    left: 19px; top: 24px; bottom: 24px; width: 2px;
+    background: linear-gradient(180deg, var(--blue), var(--orange));
+  }
+  .tl-item {
+    display: flex; gap: 28px; padding: 0 0 28px; position: relative;
+  }
+  .tl-dot {
+    width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+    background: var(--dark-grey);
+    border: 2px solid var(--blue);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 800; color: var(--blue);
+    z-index: 1; position: relative;
+    transition: all .3s;
+  }
+  .tl-item:hover .tl-dot {
+    background: var(--blue); color: var(--white);
+  }
+  .tl-dot.orange-dot { border-color: var(--orange); color: var(--orange); }
+  .tl-item:hover .orange-dot { background: var(--orange); color: var(--white); }
+
+  .tl-body { padding-top: 6px; }
+  .tl-status {
+    font-size: 9px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--orange);
+    margin-bottom: 4px;
+  }
+  .tl-status.blue { color: var(--blue); }
+  .tl-title-t {
+    font-size: 15px; font-weight: 700; color: var(--white);
+    margin-bottom: 6px;
+  }
+  .tl-desc-t {
+    font-size: 13px; font-weight: 300; color: var(--grey-light);
+    line-height: 1.65;
+  }
+
+  .speed-stats {
+    display: flex; flex-direction: column; gap: 16px;
+    justify-content: center;
+  }
+  .stat-block {
+    background: #0A0A0F;
+    border: 1px solid rgba(44,126,244,0.15);
+    padding: 28px 32px;
+    border-left: 4px solid var(--blue);
+    transition: all .3s;
+  }
+  .stat-block:hover {
+    background: rgba(44,126,244,0.07);
+    border-left-color: var(--orange);
+  }
+  .stat-block.orange-stat { border-left-color: var(--orange); }
+  .stat-big {
+    font-size: 40px; font-weight: 900; color: var(--blue);
+    line-height: 1; letter-spacing: -1px;
+  }
+  .stat-big.orange { color: var(--orange); }
+  .stat-label {
+    font-size: 12px; font-weight: 500; color: var(--grey-light);
+    margin-top: 6px; letter-spacing: 0.5px;
+  }
+
+  /* ── SLIDE 7: EQUITY ── */
+  #s7 { background: var(--dark-grey); }
+  #s7::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 80% 50%, rgba(64,61,198,0.15), transparent 60%);
+    pointer-events: none;
+  }
+
+  .equity-layout {
+    display: grid; grid-template-columns: 380px 1fr;
+    gap: 64px; align-items: center;
+    position: relative; z-index: 2;
+  }
+
+  .equity-chart-wrap { display: flex; flex-direction: column; align-items: center; gap: 28px; }
+
+  .donut-outer {
+    width: 280px; height: 280px; border-radius: 50%; position: relative;
+    background: conic-gradient(
+      var(--blue) 0deg 176.4deg,
+      rgba(255,255,255,0.06) 176.4deg 360deg
+    );
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 60px rgba(44,126,244,0.25);
+  }
+  .donut-inner {
+    width: 190px; height: 190px; border-radius: 50%;
+    background: var(--dark-grey);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    position: relative; z-index: 2;
+  }
+  .donut-pct {
+    font-size: 48px; font-weight: 900; color: var(--blue);
+    line-height: 1; letter-spacing: -2px;
+  }
+  .donut-sub {
+    font-size: 9px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--grey-light);
+    margin-top: 4px;
+  }
+
+  .eq-legend { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+  .eq-leg-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12px; color: var(--grey-light); font-weight: 500;
+  }
+  .eq-leg-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+  .eq-points { display: flex; flex-direction: column; gap: 14px; }
+  .eq-pt {
+    display: flex; gap: 20px; align-items: flex-start;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(44,126,244,0.12);
+    padding: 22px 24px;
+    transition: all .3s;
+  }
+  .eq-pt:hover {
+    background: rgba(44,126,244,0.07);
+    border-color: rgba(44,126,244,0.3);
+  }
+  .eq-pt-n {
+    font-size: 28px; font-weight: 900; color: var(--blue);
+    line-height: 1; min-width: 32px;
+  }
+  .eq-pt-title {
+    font-size: 13px; font-weight: 700; color: var(--white);
+    margin-bottom: 5px; letter-spacing: 0.3px;
+  }
+  .eq-pt-body {
+    font-size: 12px; font-weight: 300; color: var(--grey-light);
+    line-height: 1.6;
+  }
+
+  /* ── SLIDE 8: CTA ── */
+  #s8 {
+    background: var(--black);
+    align-items: center; text-align: center;
+  }
+  #s8::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 40%, rgba(44,126,244,0.12), transparent 55%),
+      radial-gradient(ellipse at 70% 60%, rgba(241,84,34,0.08), transparent 55%);
+    pointer-events: none;
+  }
+
+  .cta-wrap { position: relative; z-index: 2; width: 100%; }
+  .cta-display {
+    font-size: clamp(36px, 5.5vw, 72px);
+    font-weight: 900; line-height: 1.05; letter-spacing: -2px;
+    margin-bottom: 28px;
+  }
+  .cta-display em { font-style: normal; color: var(--blue); }
+  .cta-display strong { font-style: normal; color: var(--orange); }
+
+  .cta-sub {
+    font-size: 17px; font-weight: 300; color: var(--grey-light);
+    max-width: 580px; margin: 0 auto 52px; line-height: 1.75;
+  }
+
+  .cta-stats {
+    display: flex; justify-content: center; gap: 2px;
+    margin-bottom: 52px;
+  }
+  .cta-stat {
+    padding: 28px 44px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(44,126,244,0.2);
+    min-width: 180px;
+  }
+  .cta-stat-val {
+    font-size: 40px; font-weight: 900; color: var(--blue);
+    letter-spacing: -1px; line-height: 1;
+  }
+  .cta-stat-val.orange { color: var(--orange); }
+  .cta-stat-lbl {
+    font-size: 9px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--grey-light);
+    margin-top: 6px;
+  }
+
+  .cta-footer {
+    padding-top: 36px;
+    border-top: 1px solid rgba(44,126,244,0.2);
+    font-size: 10px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--grey-mid);
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+  }
+  .cta-footer span { color: var(--blue); }
+  .cta-sep { color: var(--orange); }
+
+  /* ── REVEAL ANIMATIONS ── */
+  .rv {
+    opacity: 0; transform: translateY(22px);
+    transition: opacity .65s ease, transform .65s ease;
+  }
+  .rv.in { opacity: 1; transform: none; }
+  .rv.d1 { transition-delay: .08s; }
+  .rv.d2 { transition-delay: .16s; }
+  .rv.d3 { transition-delay: .24s; }
+  .rv.d4 { transition-delay: .32s; }
+  .rv.d5 { transition-delay: .40s; }
+  .rv.d6 { transition-delay: .48s; }
+
+  /* ── SLIDE ENTRY ANIMATIONS ── */
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(32px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .anim-1 { animation: slideUp .7s .1s both; }
+  .anim-2 { animation: slideUp .7s .3s both; }
+  .anim-3 { animation: slideUp .7s .5s both; }
+  .anim-4 { animation: slideUp .7s .7s both; }
+  .anim-5 { animation: slideUp .7s .9s both; }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo-mark">S&P</div>
+    <div class="nav-name">S&P Development Group</div>
+  </div>
+  <div class="nav-pills" id="navPills"></div>
+  <div class="nav-slide-label" id="navLabel">Overview</div>
+</nav>
+
+<!-- ════════════════════════════════════
+     SLIDE 1 — HERO
+════════════════════════════════════ -->
+<section class="slide" id="s1">
+  <div class="geo geo-circle"></div>
+  <div class="geo geo-rect"></div>
+  <div class="geo geo-accent"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">Confidential · Investor Presentation · 2025</div>
+    <div class="eyebrow anim-1">A New Kind of Construction Partnership</div>
+    <div class="display anim-2">
+      Build With Us.<br><em>Own</em> With Us.
+    </div>
+    <p class="lead anim-3">
+      S&P Development Group is offering Eric Gan and Ganmi not just a dedicated contractor — but a direct equity stake in the company you're building together, with full financial transparency from Day 1.
+    </p>
+    <div class="hero-kpis anim-4">
+      <div class="kpi">
+        <span class="kpi-val">49%</span>
+        <span class="kpi-lbl">Equity — Immediate</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-val orange">100%</span>
+        <span class="kpi-lbl">Financial Transparency</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-val">Day 1</span>
+        <span class="kpi-lbl">Project Commencement</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-val orange">12%</span>
+        <span class="kpi-lbl">Mgmt Cap — Year 2+</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">01 <span>/ 08</span></div>
+</section>
+
+<!-- ════════════════════════════════════
+     SLIDE 2 — THE PROBLEM
+════════════════════════════════════ -->
+<section class="slide" id="s2">
+  <div class="geo geo-grid"></div>
+  <div class="eyebrow rv">Why Large GCs Fail You</div>
+  <div class="section-title rv d1">Large Contractors Move Slow.<br><em>We Were Built</em> to Move Fast.</div>
+  <div class="problem-cards rv d2">
+    <div class="p-card">
+      <div class="p-card-num">01</div>
+      <div class="p-card-title">Bloated Overhead</div>
+      <div class="p-card-body">Large general contractors carry layers of management that slow decisions, inflate costs, and reduce your visibility into where money is actually going on your projects.</div>
+    </div>
+    <div class="p-card">
+      <div class="p-card-num">02</div>
+      <div class="p-card-title">Zero Transparency</div>
+      <div class="p-card-body">Traditional contractors give you a lump sum. You never see subcontractor costs, markup layers, or where inefficiencies are hiding inside your budget — year after year.</div>
+    </div>
+    <div class="p-card">
+      <div class="p-card-num">03</div>
+      <div class="p-card-title">No Skin in the Game</div>
+      <div class="p-card-body">A hired contractor has no long-term stake in your success. When the job ends, they move on. S&P is structured so our growth depends entirely on yours — permanently.</div>
+    </div>
+  </div>
+  <div class="slide-num">02 <span>/ 08</span></div>
+</section>
+
+<!-- ════════════════════════════════════
+     SLIDE 3 — FOUR PILLARS
+════════════════════════════════════ -->
+<section class="slide" id="s3">
+  <div class="eyebrow rv">What We're Offering</div>
+  <div class="section-title rv d1">Four Pillars of<br>This <em>Partnership</em></div>
+  <div class="pillars-grid rv d2">
+    <div class="pillar">
+      <div class="pillar-icon">🔍</div>
+      <div class="pillar-title">Full Financial Transparency</div>
+      <div class="pillar-body">You will see everything — subcontractor bids, material invoices, labor costs, management fees. All reported monthly by an independent third-party accountant. No black boxes, ever.</div>
+      <div class="pillar-tag">Permanent · All Projects</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">📊</div>
+      <div class="pillar-title">Real Cost Intelligence</div>
+      <div class="pillar-body">Every project we complete together builds a proprietary database of true construction costs in your market. Raw data that lets you benchmark future projects and negotiate from a position of knowledge.</div>
+      <div class="pillar-tag">Compounding Value Over Time</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">⚡</div>
+      <div class="pillar-title">Speed & Permit Strategy</div>
+      <div class="pillar-body">We run work in parallel. Non-permit scopes start immediately. Demolition begins before demo permits are pulled — industry standard. Samuel Love's political connections ensure permit expediting at every stage.</div>
+      <div class="pillar-tag">No Idle Days</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">🏛️</div>
+      <div class="pillar-title">49% Equity in S&P</div>
+      <div class="pillar-body">The capital you invest in each project builds a construction company you partially own. The more work you provide, the more valuable your stake becomes. You're not hiring a contractor — you're capitalizing an asset.</div>
+      <div class="pillar-tag">Immediate Upon Signing</div>
+    </div>
+  </div>
+  <div class="slide-num">03 <span>/ 08</span></div>
+</section>
+
+<!-- ════════════════════════════════════
+     SLIDE 4 — TRANSPARENCY
+════════════════════════════════════ -->
+<section class="slide" id="s4">
+  <div class="eyebrow rv eyebrow-blue">Open Books</div>
+  <div class="section-title rv d1">You See Every Dollar.<br><em>Always.</em></div>
+  <div class="transparency-layout">
+    <div class="t-left">
+      <p class="rv d2">Most developers never know what a project truly costs. With S&P, you receive raw data — the kind that lets you benchmark every future project, negotiate with confidence, and make sharper capital decisions.</p>
+      <div class="t-callout rv d3">
+        An independent third-party accountant provides <span>monthly reports on every active project</span> — for the entire life of this relationship. Transparency is not a trial period. It is a <span>permanent feature</span> of this partnership.
+      </div>
+    </div>
+    <div class="data-table rv d2">
+      <div class="dt-row">
+        <div class="dt-icon">🔨</div>
+        <div class="dt-label">Subcontractor Costs</div>
+        <div class="dt-badge">Full Visibility</div>
+      </div>
+      <div class="dt-row">
+        <div class="dt-icon">🧱</div>
+        <div class="dt-label">Material Invoices</div>
+        <div class="dt-badge">Full Visibility</div>
+      </div>
+      <div class="dt-row">
+        <div class="dt-icon">👷</div>
+        <div class="dt-label">Labor & Payroll</div>
+        <div class="dt-badge">Full Visibility</div>
+      </div>
+      <div class="dt-row">
+        <div class="dt-icon">📋</div>
+        <div class="dt-label">Management Markup</div>
+        <div class="dt-badge orange">Itemized · 12% Cap</div>
+      </div>
+      <div class="dt-row">
+        <div class="dt-icon">📈</div>
+        <div class="dt-label">Budget vs. Actual</div>
+        <div class="dt-badge">Monthly Reports</div>
+      </div>
+      <div class="dt-row">
+        <div class="dt-icon">💰</div>
+        <div class="dt-label">Overruns & Project Savings</div>
+        <div class="dt-badge orange">Real-Time</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">04 <span>/ 08</span></div>
+</section>
+
+<!-- ════════════════════════════════════
+     SLIDE 5 — FINANCIAL STRUCTURE
+════════════════════════════════════ -->
+<section class="slide" id="s5">
+  <div class="eyebrow rv">Financial Structure</div>
+  <div class="section-title rv d1">Two Phases.<br>Built Around <em>Your</em> <strong>Growth.</strong></div>
+  <div class="fin-grid">
+    <div class="fin-phase p1 rv d2">
+      <div class="fin-phase-label">Phase 1</div>
+      <div class="fin-phase-title">Year 1 — Foundation</div>
+      <div class="fin-line"><span class="fl">Project Investment</span><span class="fv">Variable*</span></div>
+      <div class="fin-line"><span class="fl">Officer Compensation (Combined)</span><span class="fv">$300K / yr</span></div>
+      <div class="fin-line"><span class="fl">Overhead & Growth Margin</span><span class="fv">+3% on hard costs</span></div>
+      <div class="fin-line"><span class="fl">Unused Funds</span><span class="fv white">Returned to Investor</span></div>
+      <div class="fin-line"><span class="fl">Salary Protection</span><span class="fv white">Overruns cannot touch salaries</span></div>
+      <div class="fin-note">
+        * Initial project estimated at ~$900K. This number moves up or down based on actual raw project costs — you pay what the work truly costs plus the agreed structure above.
+      </div>
+    </div>
+    <div class="fin-phase p2 rv d3">
+      <div class="fin-phase-label">Phase 2</div>
+      <div class="fin-phase-title">Year 2+ — Performance</div>
+      <div class="fin-line"><span class="fl">Salary Guarantee</span><span class="fv orange">Retired</span></div>
+      <div class="fin-line"><span class="fl">Management Markup (Ganmi)</span><span class="fv orange">12% — Hard Cap</span></div>
+      <div class="fin-line"><span class="fl">Markup Funds</span><span class="fv white">Salaries + Admin + Ops + Growth</span></div>
+      <div class="fin-line"><span class="fl">Quarterly Salary Reviews</span><span class="fv white">Tied to Company Growth</span></div>
+      <div class="fin-line"><span class="fl">Investor Oversight</span><span class="fv">Permanent</span></div>
+      <div class="fin-note orange-note">
+        In Year 2, S&P earns through performance — not guaranteed capital. Your 12% cap on all Ganmi projects is locked in permanently.
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">05 <span>/ 08</span></div>
+</section>
+
+<!-- ════════════════════════════════════
+     SLIDE 6 — SPEED & PARALLEL WORK
+════════════════════════════════════ -->
+<section class="slide" id="s6">
+  <div class="eyebrow rv">Execution Strategy</div>
+  <div class="section-title rv d1">No Waiting.<br>Work Runs <em>in Parallel.</em></div>
+  <div class="speed-layout">
+    <div class="tl rv d2">
+      <div class="tl-item">
+        <div class="tl-dot orange-dot">1</div>
+        <div class="tl-body">
+          <div class="tl-status">Immediate — Day 1</div>
+          <div class="tl-title-t">Level 4 — Carpet & Paint Scopes</div>
+          <div class="tl-desc-t">No permits required. Finish-level units begin the day the agreement is signed. Carpet, paint, and cosmetic work generates value immediately while larger permits process.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">2</div>
+        <div class="tl-body">
+          <div class="tl-status blue">Early Stage</div>
+          <div class="tl-title-t">Demolition — Prior to Demo Permit</div>
+          <div class="tl-desc-t">Standard industry practice allows selective demolition before the demo permit is issued. We use this window aggressively to stay ahead of the permit timeline and eliminate idle days.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot orange-dot">3</div>
+        <div class="tl-body">
+          <div class="tl-status">In Parallel</div>
+          <div class="tl-title-t">Permit Expediting via Political Connections</div>
+          <div class="tl-desc-t">Samuel Love maintains active municipal relationships in San Diego. Permit expediting is a service we provide directly — we work every available channel to compress timelines.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">4</div>
+        <div class="tl-body">
+          <div class="tl-status blue">Full Launch</div>
+          <div class="tl-title-t">Full Level 4 Construction — Permit in Hand</div>
+          <div class="tl-desc-t">The moment permits are issued, full construction commences with zero ramp-up. Crews, subcontractors, and materials are pre-staged during the permit window.</div>
+        </div>
+      </div>
+    </div>
+    <div class="speed-stats rv d3">
+      <div class="stat-block">
+        <div class="stat-big">$0</div>
+        <div class="stat-label">Days billed while waiting on permits — work runs in parallel</div>
+      </div>
+      <div class="stat-block orange-stat">
+        <div class="stat-big orange">Day 1</div>
+        <div class="stat-label">Level 4 carpet & paint units begin immediately upon signing</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-big">Pre-Staged</div>
+        <div class="stat-label">All crews and materials lined up during permit window — zero ramp-up delay</div>
+      </div>
+      <div class="stat-block orange-stat">
+        <div class="stat-big orange">Political</div>
+        <div class="stat-label">Direct municipal relationships used to expedite every permit in San Diego</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">06 <span>/ 08</span></div>
+</section>
+
+<!-- ════════════════════════════════════
+     SLIDE 7 — EQUITY
+════════════════════════════════════ -->
+<section class="slide" id="s7">
+  <div class="eyebrow rv">Equity Structure</div>
+  <div class="section-title rv d1">You're Not a Client.<br>You're a <em>Co-Owner.</em></div>
+  <div class="equity-layout">
+    <div class="equity-chart-wrap rv d2">
+      <div class="donut-outer">
+        <div class="donut-inner">
+          <div class="donut-pct">49%</div>
+          <div class="donut-sub">Your Stake</div>
+        </div>
+      </div>
+      <div class="eq-legend">
+        <div class="eq-leg-item">
+          <div class="eq-leg-dot" style="background:var(--blue)"></div>
+          Eric Gan / Ganmi — 49%
+        </div>
+        <div class="eq-leg-item">
+          <div class="eq-leg-dot" style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2)"></div>
+          Samuel Love & Percy Mendoza — 51%
+        </div>
+      </div>
+    </div>
+    <div class="eq-points">
+      <div class="eq-pt rv d2">
+        <div class="eq-pt-n">01</div>
+        <div>
+          <div class="eq-pt-title">Immediate Transfer Upon Signing</div>
+          <div class="eq-pt-body">The 49% equity holding transfers the moment this agreement is executed. No vesting cliff. No waiting period. You are a stakeholder from Day 1.</div>
+        </div>
+      </div>
+      <div class="eq-pt rv d3">
+        <div class="eq-pt-n">02</div>
+        <div>
+          <div class="eq-pt-title">You Build the Value of Your Own Stake</div>
+          <div class="eq-pt-body">Every project you send to S&P increases the Company's revenue and market value. Your equity becomes more valuable with every job you provide.</div>
+        </div>
+      </div>
+      <div class="eq-pt rv d4">
+        <div class="eq-pt-n">03</div>
+        <div>
+          <div class="eq-pt-title">Founders Retain Operating Control</div>
+          <div class="eq-pt-body">S&P's founding team retains 51% — ensuring fast, decisive execution without committee approval. Exactly the speed that brought you to S&P.</div>
+        </div>
+      </div>
+      <div class="eq-pt rv d5">
+        <div class="eq-pt-n">04</div>
+        <div>
+          <div class="eq-pt-title">Quarterly Reviews Tied to Growth</div>
+          <div class="eq-pt-body">Every 90 days we review performance, pipeline, and financials together. Compensation grows in step with the company — no stagnant numbers in a growing business.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">07 <span>/ 08</span></div>
+</section>
+
+<!-- ════════════════════════════════════
+     SLIDE 8 — CTA
+════════════════════════════════════ -->
+<section class="slide" id="s8">
+  <div class="cta-wrap">
+    <div class="eyebrow rv" style="color:var(--orange);">The Opportunity</div>
+    <div class="cta-display rv d1">
+      You're spending<br>the money <em>anyway.</em><br>Let's make it work<br>harder for <strong>you.</strong>
+    </div>
+    <p class="cta-sub rv d2">The capital you invest in this first project isn't a construction budget. It's seed capital in a construction company that is loyal to you, transparent with you, and partially owned by you.</p>
+    <div class="cta-stats rv d3">
+      <div class="cta-stat">
+        <div class="cta-stat-val">49%</div>
+        <div class="cta-stat-lbl">Equity · Immediate</div>
+      </div>
+      <div class="cta-stat">
+        <div class="cta-stat-val orange">12%</div>
+        <div class="cta-stat-lbl">Mgmt Cap · Year 2+</div>
+      </div>
+      <div class="cta-stat">
+        <div class="cta-stat-val">100%</div>
+        <div class="cta-stat-lbl">Transparency · Always</div>
+      </div>
+    </div>
+    <div class="cta-footer rv d4">
+      <span>S&P Development Group</span>
+      <span class="cta-sep">·</span>
+      Samuel Love
+      <span class="cta-sep">·</span>
+      Percy Mendoza
+      <span class="cta-sep">·</span>
+      San Diego, CA
+    </div>
+  </div>
+  <div class="slide-num">08 <span>/ 08</span></div>
+</section>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const pillsContainer = document.getElementById('navPills');
+  const navLabel = document.getElementById('navLabel');
+  const slideLabels = ['Overview','The Problem','Our Offer','Transparency','Financials','Execution','Equity','Partnership'];
+
+  slides.forEach((_, i) => {
+    const pill = document.createElement('button');
+    pill.className = 'nav-pill' + (i === 0 ? ' active' : '');
+    pill.addEventListener('click', () => slides[i].scrollIntoView({ behavior: 'smooth' }));
+    pillsContainer.appendChild(pill);
+  });
+
+  const pills = document.querySelectorAll('.nav-pill');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const idx = Array.from(slides).indexOf(entry.target);
+      pills.forEach((p, i) => p.classList.toggle('active', i === idx));
+      navLabel.textContent = slideLabels[idx] || '';
+      entry.target.querySelectorAll('.rv').forEach(el => el.classList.add('in'));
+    });
+  }, { threshold: 0.3 });
+
+  slides.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
